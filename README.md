@@ -37,6 +37,10 @@ Usage: `python3 play.py [-h|--help] [--today|DAY|SOLUTION] [--hints]`
 |`DAY` (number)         |**\***  Use the official solution from this DAY            |
 |`SOLUTION` (str)       |**\***  Use a given SOLUTION (must be 5-letter word)       |
 |`--hints`              |After each guess, report number of possible words remaining|
+|`--clue-gen`           |Generate all possible clues for the SOLUTION               |
+|`--clue-use`           |Use the clues to reduce the possible words                 |
+|`--auto`               |Auto select first hint as next guess                       |
+|`--hints`              |After each guess, report number of possible words remaining|
 |`-h` , `--help`        |Print this help text and quit                              |
 
 _Note: options marked **\*** are mutually-exclusive._

@@ -88,6 +88,8 @@ class CLIPlayer:
         prompt = f"Guess { round }/{ Game.ROUNDS}: "
         guess = input(prompt).upper()
         sys.stdout.write(f"\033[A\033[{len(prompt)}C\033[K") # move cursor up one line, right by len(prompt), then clear rest of line
+        sys.stdout.write(f"\033[A\033[{len(prompt)}C\033[K") # move cursor up one line, right by len(prompt), then clear rest of line
+        
         return guess
 
     def handle_response(self, guess: str, states: List[LetterStates], hint: int):
@@ -96,8 +98,8 @@ class CLIPlayer:
             # only change a letter's keyboard status if new status is "better" (avoids repeat letter problem)
             if state.value > self._keyboard_status[letter].value:
                 self._keyboard_status[letter] = state
-        self.out(self.pretty_response(guess, states, self._C)+(f" { self._C.DIM }{ hint } possible" if hint != -1 else ""))
-        self.update_keyboard()
+        # self.out(self.pretty_response(guess, states, self._C)+(f" { self._C.DIM }{ hint } possible" if hint != -1 else ""))
+        # self.update_keyboard()
 
     def warn(self, warning):
         self.out(f"{ self._C.WARN }{ warning }")
@@ -105,15 +107,15 @@ class CLIPlayer:
     def handle_win(self, round):
         self.out(f"{ self._C.WIN }{ self._C.WIN_MESSAGES[round] }! Got it in { round }/{ Game.ROUNDS } rounds")
         
-        share_text = f"wordle-cli {(str(self.GAME_NUMBER)+' ' if self.GAME_NUMBER else '')}{round}/{Game.ROUNDS}\n"
-        for _, states in self._response_history:
-            share_text += "\n" + "".join(self._C.SHARE_EMOJI[state] for state in states)
+        # share_text = f"wordle-cli {(str(self.GAME_NUMBER)+' ' if self.GAME_NUMBER else '')}{round}/{Game.ROUNDS}\n"
+        # for _, states in self._response_history:
+        #     share_text += "\n" + "".join(self._C.SHARE_EMOJI[state] for state in states)
 
-        if CLIPlayer.try_clipboard(share_text):
-            self.out(f"📣 Shareable summary copied to clipboard")
-        else:
-            self.out(f"📣 Shareable summary:")
-            self.out(share_text + "\n")
+        # if CLIPlayer.try_clipboard(share_text):
+        #     self.out(f"📣 Shareable summary copied to clipboard")
+        # else:
+        #     self.out(f"📣 Shareable summary:")
+        #     self.out(share_text + "\n")
 
     def handle_loss(self, solution):
         self.out(f"{ self._C.LOSE }🤦 LOSE! The solution was { solution }")

@@ -16,6 +16,9 @@ def print_help():
     print("DAY (number)\t* Use the official solution from this DAY")
     print("SOLUTION (str)\t* Use a given SOLUTION (must be 5-letter word)")
     print("--hints\t\tAfter each guess, report number of possible words remaining")
+    print("--clue-gen\t\tGenerate Clues")
+    print("--clue-use\t\tUse Clues")
+    print("--auto\t\tAuto select first hint as next guess")
     print("-h, --help\tPrint this help text and quit")
     exit()
 
@@ -25,6 +28,9 @@ if __name__=="__main__":
     
     solution = None
     hints = False
+    clueGen = False
+    clueUse = False
+    auto = False
     loop = False
     for arg in sys.argv[1:]:
         if arg == "-h" or arg == "--help":
@@ -42,6 +48,12 @@ if __name__=="__main__":
             player.warn(f"Solution will be { solution }")
         elif arg == "--hints":
             hints = True
+        elif arg == "--clue-gen":
+            clueGen = True
+        elif arg == "--clue-use":
+            clueUse = True
+        elif arg == "--auto":
+            auto = True
         else:
             player.warn(f"Invalid argument { arg }")
             print_help()
@@ -49,7 +61,10 @@ if __name__=="__main__":
     if solution == None:
         solution = random.choice(game.VALID_SOLUTIONS)
         loop = True
-         
+    
+    game.play(player, solution, hints=hints, clueGen=clueGen, clueUse=clueUse, auto=auto)
+    exit()
+    
     while True:
         try:
             game.play(player, solution, hints=hints)
